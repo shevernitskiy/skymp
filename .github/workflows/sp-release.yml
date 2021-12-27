@@ -33,12 +33,7 @@ jobs:
           chmod 644 ${{github.workspace}}/skyrim-platform/src/platform_se/skyrim_platform/DevApi.cpp
           chmod 644 ${{github.workspace}}/skyrim-platform/package.json
           chmod 644 ${{github.workspace}}/skymp5-client/src/version.ts
-          
-      - name: Create Archive
-        run: |
-          chmod 777 ${{github.workspace}}/docs/release
-          zip -r ${{github.workspace}}/docs/release/SkyrimPlatform.zip ${{github.workspace}}/build/dist/client/Data/*
-     
+            
       - name: Generate Chaneglog
         run: |
           chmod 777 ${{github.workspace}}/docs/release
