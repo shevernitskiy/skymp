@@ -1,0 +1,35 @@
+name: SP Release
+on:
+  workflow_dispatch:
+jobs:
+  sprelease:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get Versions
+        run: |
+          OLDVER=$(sed -n "s/.*\([0-9]\.[0-9]\.[0-9]*\).*/\1/p" ${{github.workspace}}/skyrim-platform/package.json | head -1)
+          MINOR=$(echo "$OLDVER" | sed -n "s/[0-9]\.\([0-9]\)\.[0-9]/\1/p")
+          NEWMINOR=$((MINOR+1))
+          NEWVER=$(echo "$OLDVER" | sed -n "s/\.$MINOR\./\.$NEWMINOR\./p")
+          echo "OLDVER=$OLDVER" >> $GITHUB_ENV
+          echo "NEWVER=$NEWVER" >> $GITHUB_ENV
+          echo "Detect oldver: $OLDVER"
+          echo "Newver: $NEWVER"
+
+      - name: Replace Version In Files
+        run: |
+          sed -i "s/${{ env.OLDVER }}/${{ env.NEWVER }}/g" ${{github.workspace}}/skyrim-platform/src/plarform_se/CMakeList.txt
+          sed -i "s/${{ env.OLDVER }}/${{ env.NEWVER }}/g" ${{github.workspace}}/skyrim-platform/src/plarform_se/skyrim_platform/DevApi.cpp
+          sed -i "s/${{ env.OLDVER }}/${{ env.NEWVER }}/g" ${{github.workspace}}/skyrim-platform/package.json
+          sed -i "s/${{ env.OLDVER }}/${{ env.NEWVER }}/g" ${{github.workspace}}/skymp5-client/src/version.ts
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: "Update SP to ${{ env.NEWVER }}"
+          title: "release(skyrim-platform): version ${{ env.NEWVER }}"
+          body: Bot put here this release PR, enjoy...
+          branch: "release-sp${{ env.NEWVER }}"
