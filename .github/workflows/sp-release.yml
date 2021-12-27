@@ -34,16 +34,27 @@ jobs:
           chmod 644 ${{github.workspace}}/skyrim-platform/package.json
           chmod 644 ${{github.workspace}}/skymp5-client/src/version.ts
 
-
-      - name: Setup Python
-        uses: actions/setup-python@v2
+      - uses: papeloto/action-zip@v1
         with:
-          python-version: 3.8
-      - run: pip install semantic_version
-          
-      - name: Execute Script
+          files: build/dist/client/data/
+          dest: SkyrimPlatform.zip
+      
+      - name: Generate Chaneglog
         run: |
-          python ${{github.workspace}}/ci/impl/release.py --mod_name SkyrimPlatform
+          chmod 777 ${{github.workspace}}/docs/release
+          $TRAGET=$(echo "${{github.workspace}}/docs/release/sp-${{ env.NEWVER }}.md")
+          echo "# SP ${{ env.NEWVER }} Release Notes"$'\n' >> $TRAGET
+          echo "This document includes changes made since SP ${{ env.OLDVER }}"$'\n' >> $TRAGET
+          echo "SP updates regularly. This update probably doesn't include ALL patches that have to be made."$'\n' >> $TRAGET
+          echo "There are still many things to be implemented or fixed. See [issues](https://github.com/skyrim-multiplayer/skymp/issues?q=is%3Aopen+is%3Aissue+label%3Aarea%3Askyrim-platform)."$'\n' >> $TRAGET
+          echo "Please note that the current SP version only works for the old SE build (before the 11.11.21 update)."$'\n' >> $TRAGET
+          echo "To downgrade your Skyrim SE installation use [this patch](https://www.nexusmods.com/skyrimspecialedition/mods/57618)."$'\n' >> $TRAGET
+          for file in `find ${{github.workspace}}/docs/release/dev -type f -name "sp*.md"`
+          do
+            content=$(< $file)
+            echo "$content" >> $TRAGET
+            echo $'\n' >> $TRAGET
+          done
           
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
