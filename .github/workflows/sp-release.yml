@@ -33,11 +33,10 @@ jobs:
           chmod 644 ${{github.workspace}}/skyrim-platform/src/platform_se/skyrim_platform/DevApi.cpp
           chmod 644 ${{github.workspace}}/skyrim-platform/package.json
           chmod 644 ${{github.workspace}}/skymp5-client/src/version.ts
-
-      - uses: papeloto/action-zip@v1
+          
+      - uses: montudor/action-zip@v1
         with:
-          files: ${{github.workspace}}/build/dist/client/data/
-          dest: SkyrimPlatform.zip
+          args: zip -qq -r SkyrimPlatform.zip ${{github.workspace}}/build/dist/client/data
       
       - name: Generate Chaneglog
         run: |
