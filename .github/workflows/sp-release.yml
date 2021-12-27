@@ -43,7 +43,7 @@ jobs:
         with:
           type: 'zip'
           filename: 'SkyrimPlatform.zip'
-          path: '/build/dist/client/data'
+          path: "${{github.workspace}}/build/dist/client/data"
       
       - name: Generate Chaneglog
         run: |
