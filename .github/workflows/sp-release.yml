@@ -42,7 +42,7 @@ jobs:
       - name: Generate Chaneglog
         run: |
           chmod 777 ${{github.workspace}}/docs/release
-          $TRAGET="${{github.workspace}}/docs/release/sp-${{ env.NEWVER }}.md"
+          TRAGET=$(echo "${{github.workspace}}/docs/release/sp-${{ env.NEWVER }}.md")
           echo "# SP ${{ env.NEWVER }} Release Notes"$'\n' >> $TRAGET
           echo "This document includes changes made since SP ${{ env.OLDVER }}"$'\n' >> $TRAGET
           echo "SP updates regularly. This update probably doesn't include ALL patches that have to be made."$'\n' >> $TRAGET
