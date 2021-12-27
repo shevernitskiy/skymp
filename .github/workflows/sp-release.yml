@@ -52,9 +52,20 @@ jobs:
           for file in `find ${{github.workspace}}/docs/release/dev -type f -name "sp*.md"`
           do
             content=$(< $file)
-            echo "$content" >> $TRAGET
-            echo $'\n' >> $TRAGET
+            if grep -q "#" "$file"; then
+              echo "$content" >> $TRAGET
+              echo $'\n' >> $TRAGET
+            else
+              echo "- $content" >> ./temp.txt
+              echo $'\n' >> ./temp.txt
+            fi
           done
+          if [ -e temp.txt ]; then
+            echo "## Other changes"$'\n' >> $TRAGET
+            content=$(< ./temp.txt)
+            echo "$content" >> $TRAGET
+          fi
+          rm -f ./temp.txt
           
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
