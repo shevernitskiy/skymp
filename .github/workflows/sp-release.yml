@@ -36,7 +36,8 @@ jobs:
           
       - name: Create Archive
         run: |
-          zip -r SkyrimPlatform.zip ${{github.workspace}}/build/dist/client/Data/*
+          chmod 777 ${{github.workspace}}/docs/release
+          zip -r ${{github.workspace}}/docs/release/SkyrimPlatform.zip ${{github.workspace}}/build/dist/client/Data/*
      
       - name: Generate Chaneglog
         run: |
