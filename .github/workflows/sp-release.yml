@@ -21,8 +21,10 @@ jobs:
 
       - name: Replace Version In Files
         run: |
-          cd ${{github.workspace}}/skyrim-platform/
-          ls -l
+          chmod 777 ${{github.workspace}}/skyrim-platform/src/platform_se/CMakeLists.txt
+          chmod 777 ${{github.workspace}}/skyrim-platform/src/plarform_se/skyrim_platform/DevApi.cpp
+          chmod 777 ${{github.workspace}}/skyrim-platform/package.json
+          chmod 777 ${{github.workspace}}/skymp5-client/src/version.ts
           sed -i "s/${{ env.OLDVER }}/${{ env.NEWVER }}/g" ${{github.workspace}}/skyrim-platform/src/platform_se/CMakeLists.txt
           sed -i "s/${{ env.OLDVER }}/${{ env.NEWVER }}/g" ${{github.workspace}}/skyrim-platform/src/plarform_se/skyrim_platform/DevApi.cpp
           sed -i "s/${{ env.OLDVER }}/${{ env.NEWVER }}/g" ${{github.workspace}}/skyrim-platform/package.json
