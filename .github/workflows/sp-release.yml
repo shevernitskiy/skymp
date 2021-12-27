@@ -36,8 +36,8 @@ jobs:
           
       - uses: papeloto/action-zip@v1
         with:
-          files: build/dist/client/data /build/dist/client/data build/dist/client/data/ /build/dist/client/data/ ${{github.workspace}}/build/dist/client/data
-          dest: result.zip
+          files: build/dist/client/Data /build/dist/client/Data build/dist/client/Data/ /build/dist/client/Data/ ${{github.workspace}}/build/dist/client/Data
+          dest: SkyrimPlatform.zip
      
       - name: Generate Chaneglog
         run: |
