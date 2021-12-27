@@ -36,7 +36,7 @@ jobs:
           
       - uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r SkyrimPlatform.zip ${{github.workspace}}/build/dist/client/data
+          args: zip -qq -r SkyrimPlatform.zip . -i ${{github.workspace}}/build/dist/client/data
       
       - name: Generate Chaneglog
         run: |
