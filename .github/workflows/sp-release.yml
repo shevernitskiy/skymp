@@ -34,17 +34,11 @@ jobs:
           chmod 644 ${{github.workspace}}/skyrim-platform/package.json
           chmod 644 ${{github.workspace}}/skymp5-client/src/version.ts
           
-      - uses: montudor/action-zip@v1
+      - name: Compress
+        uses: TonyBogdanov/zip@1.0
         with:
-          args: zip -qq -r SkyrimPlatform.zip . -i ${{github.workspace}}/build/dist/client/data
-      
-      - name: Archive Release
-        uses: thedoctor0/zip-release@master
-        with:
-          type: 'zip'
-          filename: 'SkyrimPlatform.zip'
-          path: "${{github.workspace}}/build/dist/client/data"
-      
+          args: zip -qq -r ./SkyrimPlatform.zip ./build/dist/client/data
+     
       - name: Generate Chaneglog
         run: |
           chmod 777 ${{github.workspace}}/docs/release
