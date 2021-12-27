@@ -36,15 +36,15 @@ jobs:
 
       - uses: papeloto/action-zip@v1
         with:
-          files: build/dist/client/data/
+          files: ${{github.workspace}}/build/dist/client/data/
           dest: SkyrimPlatform.zip
       
       - name: Generate Chaneglog
         run: |
           chmod 777 ${{github.workspace}}/docs/release
           TRAGET=$(echo "${{github.workspace}}/docs/release/sp-${{ env.NEWVER }}.md")
-          echo "# SP ${{ env.NEWVER }} Release Notes"$'\n' >> $TRAGET
-          echo "This document includes changes made since SP ${{ env.OLDVER }}"$'\n' >> $TRAGET
+          echo "# SP ${{ env.NEWVER }} Release Notes"$'\n'$'\n' >> $TRAGET
+          echo "This document includes changes made since SP ${{ env.OLDVER }}"$'\n'$'\n' >> $TRAGET
           echo "SP updates regularly. This update probably doesn't include ALL patches that have to be made."$'\n' >> $TRAGET
           echo "There are still many things to be implemented or fixed. See [issues](https://github.com/skyrim-multiplayer/skymp/issues?q=is%3Aopen+is%3Aissue+label%3Aarea%3Askyrim-platform)."$'\n' >> $TRAGET
           echo "Please note that the current SP version only works for the old SE build (before the 11.11.21 update)."$'\n' >> $TRAGET
