@@ -34,10 +34,10 @@ jobs:
           chmod 644 ${{github.workspace}}/skyrim-platform/package.json
           chmod 644 ${{github.workspace}}/skymp5-client/src/version.ts
           
-      - name: Compress
-        uses: TonyBogdanov/zip@1.0
+      - uses: papeloto/action-zip@v1
         with:
-          args: zip -qq -r ./SkyrimPlatform.zip ./build/dist/client/data
+          files: build/dist/client/data
+          dest: result.zip
      
       - name: Generate Chaneglog
         run: |
