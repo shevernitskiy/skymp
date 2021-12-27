@@ -34,6 +34,16 @@ jobs:
           chmod 644 ${{github.workspace}}/skyrim-platform/package.json
           chmod 644 ${{github.workspace}}/skymp5-client/src/version.ts
 
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+          
+      - name: Execute Script
+        run: |
+          python ${{github.workspace}}/ci/impl/release.py --mod_name SkyrimPlatform
+          
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
