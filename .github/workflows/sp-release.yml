@@ -38,6 +38,13 @@ jobs:
         with:
           args: zip -qq -r SkyrimPlatform.zip . -i ${{github.workspace}}/build/dist/client/data
       
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          filename: 'SkyrimPlatform.zip'
+          path: '/build/dist/client/data'
+      
       - name: Generate Chaneglog
         run: |
           chmod 777 ${{github.workspace}}/docs/release
